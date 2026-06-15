@@ -1,64 +1,71 @@
-import axios from 'axios'
+import axios, { type AxiosInstance } from 'axios'
 
-const BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8000'
+const BASE_URL = (import.meta as any).env.VITE_API_URL ?? 'http://localhost:8000'
 
-const api = axios.create({ baseURL: BASE_URL })
+// Token stored in closure — avoids circular import with authStore
+let _accessToken: string | null = null
+export function setAxiosToken(token: string | null) { _accessToken = token }
 
-// Attach access token
+const api: AxiosInstance = axios.create({ baseURL: BASE_URL })
+
+// Attach access token to every request
 api.interceptors.request.use((config) => {
-  // authStore is imported lazily to avoid circular dependency
-  const { useAuthStore } = require('../store/authStore')
-  const token = useAuthStore.getState().accessToken
-  if (token) config.headers.Authorization = `Bearer ${token}`
+  if (_accessToken) config.headers.Authorization = `Bearer ${_accessToken}`
   return config
 })
 
-let isRefreshing = false
-let queue: Array<{ resolve: (v: string) => void; reject: (e: unknown) => void }> = []
+// 401 → silent refresh → retry original request
+let _isRefreshing = false
+type QueueEntry = { resolve: (v: string) => void; reject: (e: unknown) => void }
+let _queue: QueueEntry[] = []
 
-function processQueue(error: unknown, token: string | null) {
-  queue.forEach((p) => (error ? p.reject(error) : p.resolve(token!)))
-  queue = []
+function processQueue(err: unknown, token: string | null) {
+  _queue.forEach(p => err ? p.reject(err) : p.resolve(token!))
+  _queue = []
 }
 
-// 401 → silent refresh → retry
 api.interceptors.response.use(
-  (r) => r,
+  r => r,
   async (error) => {
-    const original = error.config
-    if (error.response?.status !== 401 || original._retry) {
-      return Promise.reject(error)
-    }
+    const original = error.config as typeof error.config & { _retry?: boolean }
+    if (error.response?.status !== 401 || original._retry) return Promise.reject(error)
+
     const refresh = localStorage.getItem('refresh_token')
     if (!refresh) {
+      // Lazy import to avoid circular dependency at module load time
       const { useAuthStore } = await import('../store/authStore')
       useAuthStore.getState().logout()
       return Promise.reject(error)
     }
-    if (isRefreshing) {
-      return new Promise((resolve, reject) => {
-        queue.push({ resolve, reject })
-      }).then((token) => {
-        original.headers.Authorization = `Bearer ${token}`
-        return api(original)
-      })
+
+    if (_isRefreshing) {
+      return new Promise<string>((resolve, reject) => _queue.push({ resolve, reject }))
+        .then(token => {
+          original.headers.Authorization = `Bearer ${token}`
+          return api(original)
+        })
     }
+
     original._retry = true
-    isRefreshing = true
+    _isRefreshing = true
+
     try {
       const { data } = await axios.post(`${BASE_URL}/api/auth/token/refresh/`, { refresh })
+      setAxiosToken(data.access)
+      processQueue(null, data.access)
+      // Update authStore without circular import
       const { useAuthStore } = await import('../store/authStore')
       useAuthStore.getState().setAccessToken(data.access)
-      processQueue(null, data.access)
       original.headers.Authorization = `Bearer ${data.access}`
       return api(original)
     } catch (e) {
       processQueue(e, null)
+      localStorage.removeItem('refresh_token')
       const { useAuthStore } = await import('../store/authStore')
       useAuthStore.getState().logout()
       return Promise.reject(e)
     } finally {
-      isRefreshing = false
+      _isRefreshing = false
     }
   }
 )

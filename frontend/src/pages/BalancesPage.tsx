@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { CheckCircle2, Wallet } from 'lucide-react'
+import { CheckCircle2 } from 'lucide-react'
 import { useGroups, useGlobalBalances, useGroupBalances } from '../hooks'
 import { useAuthStore } from '../store/authStore'
-import { Card, Skeleton, EmptyState, Avatar } from '../components/ui'
+import { Card, Skeleton, Avatar } from '../components/ui'
 import { formatCurrency, resolveBalance } from '../lib/utils'
 import type { Balance, SimplifiedBalance } from '../types'
 
@@ -29,6 +29,13 @@ export function BalancesPage() {
         <div>
           <h1 className="text-2xl font-bold text-white">Balances</h1>
           <p className="text-zinc-400 text-sm mt-0.5">Track what you owe and what's owed to you</p>
+        </div>
+        <div className="flex items-center gap-2 text-sm">
+          <span className="text-zinc-400">Simplified View</span>
+          <button onClick={() => setSimplified(v => !v)}
+            className={`relative w-10 h-5 rounded-full transition-colors ${simplified ? 'bg-indigo-500' : 'bg-white/10'}`}>
+            <span className={`absolute top-0.5 left-0.5 size-4 bg-white rounded-full transition-transform ${simplified ? 'translate-x-5' : ''}`} />
+          </button>
         </div>
       </div>
 

@@ -2,7 +2,6 @@ import { Outlet } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
 import { Sidebar } from './Sidebar'
 import { useUIStore } from '../../store/uiStore'
-import { useAuthStore } from '../../store/authStore'
 import { Button } from '../ui'
 import { ModalManager } from '../modals'
 

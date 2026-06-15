@@ -82,8 +82,8 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
 Select.displayName = 'Select'
 
 // ── Card ──────────────────────────────────────────────────────────────
-export const Card = ({ className, children }: { className?: string; children: React.ReactNode }) => (
-  <div className={cn('bg-surface-1 border border-white/8 rounded-xl', className)}>{children}</div>
+export const Card = ({ className, children, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn('bg-surface-1 border border-white/8 rounded-xl', className)} {...props}>{children}</div>
 )
 
 // ── Avatar ────────────────────────────────────────────────────────────

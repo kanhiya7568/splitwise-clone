@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom'
-import { Users, Receipt, TrendingUp, TrendingDown, Minus, Plus } from 'lucide-react'
+import { Users, Plus } from 'lucide-react'
 import { useGroups, useGlobalBalances } from '../hooks'
 import { useAuthStore } from '../store/authStore'
 import { useUIStore } from '../store/uiStore'
-import { StatCard, Card, Button, Skeleton, EmptyState, Avatar, Badge } from '../components/ui'
+import { StatCard, Card, Button, Skeleton, EmptyState } from '../components/ui'
 import { formatCurrency, formatDate, resolveBalance } from '../lib/utils'
 
 export function DashboardPage() {

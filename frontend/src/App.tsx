@@ -13,6 +13,7 @@ import { GroupDetailPage } from './pages/GroupDetailPage'
 import { ExpenseDetailPage } from './pages/ExpenseDetailPage'
 import { BalancesPage } from './pages/BalancesPage'
 import { NotFoundPage } from './pages/NotFoundPage'
+import { ImportPage } from './pages/ImportPage'
 
 function AppContent() {
   const hydrate = useAuthStore(s => s.hydrate)
@@ -31,6 +32,7 @@ function AppContent() {
             <Route path="groups/:groupId" element={<GroupDetailPage />} />
             <Route path="groups/:groupId/expenses/:expenseId" element={<ExpenseDetailPage />} />
             <Route path="balances" element={<BalancesPage />} />
+            <Route path="import" element={<ImportPage />} />
           </Route>
         </Route>
         <Route path="*" element={<NotFoundPage />} />

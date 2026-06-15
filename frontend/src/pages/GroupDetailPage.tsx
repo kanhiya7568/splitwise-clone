@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { Plus, UserPlus, ArrowLeftRight, MoreHorizontal, Trash2, Edit, ChevronRight, CheckCircle2 } from 'lucide-react'
+import { Plus, UserPlus, ArrowLeftRight, MoreHorizontal, Trash2, Edit, CheckCircle2 } from 'lucide-react'
 import { useGroup, useGroupMembers, useExpenses, useGroupBalances, useSettlements, useRemoveMember, useDeleteExpense } from '../hooks'
 import { useUIStore } from '../store/uiStore'
 import { useAuthStore } from '../store/authStore'

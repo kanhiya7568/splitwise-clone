@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     "apps.balances",
     "apps.settlements",
     "apps.chat",
+    "apps.imports",
 ]
 
 # ─────────────────────────────────────────────────────────────────────────────

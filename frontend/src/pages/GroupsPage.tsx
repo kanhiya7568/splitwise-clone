@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { Plus, Users, ChevronRight } from 'lucide-react'
 import { useGroups } from '../hooks'
 import { useUIStore } from '../store/uiStore'
-import { Card, Button, Skeleton, EmptyState, Badge } from '../components/ui'
+import { Card, Button, Skeleton, EmptyState } from '../components/ui'
 import { formatDate } from '../lib/utils'
 
 export function GroupsPage() {

@@ -75,4 +75,11 @@ urlpatterns = [
     # GET    /api/expenses/{eid}/messages/
     # DELETE /api/expenses/{eid}/messages/{id}/
     path("api/", include("apps.chat.urls")),
+
+    # ── CSV Imports ────────────────────────────────────────────────────────────
+    # POST /api/imports/upload/
+    # GET  /api/imports/
+    # GET  /api/imports/{id}/
+    # GET  /api/imports/{id}/report/
+    path("api/", include("apps.imports.urls")),
 ]
