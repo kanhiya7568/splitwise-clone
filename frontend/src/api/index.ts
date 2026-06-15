@@ -1,15 +1,25 @@
 import api from '../lib/axios'
 import type {
   User, Group, GroupMember, Expense, Balance, SimplifiedBalance,
-  Settlement, Message, TokenPair, PaginatedResponse
+  Settlement, Message, PaginatedResponse
 } from '../types'
 
 // ── Auth ──────────────────────────────────────────────────────────────
 export const authApi = {
   register: (d: { email: string; password: string; first_name: string; last_name: string }) =>
-    api.post<TokenPair & { user: User }>('/api/auth/register/', d).then(r => r.data),
+    api.post<{ access_token: string; refresh_token: string; user: User }>('/api/auth/register/', d)
+      .then(r => ({
+        access: r.data.access_token,
+        refresh: r.data.refresh_token,
+        user: r.data.user
+      })),
   login: (d: { email: string; password: string }) =>
-    api.post<TokenPair & { user: User }>('/api/auth/login/', d).then(r => r.data),
+    api.post<{ access_token: string; refresh_token: string; user: User }>('/api/auth/login/', d)
+      .then(r => ({
+        access: r.data.access_token,
+        refresh: r.data.refresh_token,
+        user: r.data.user
+      })),
   logout: (refresh: string) =>
     api.post('/api/auth/logout/', { refresh }),
   me: () => api.get<User>('/api/auth/me/').then(r => r.data),
