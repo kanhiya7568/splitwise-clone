@@ -1,71 +1,34 @@
-# Splitwise Clone
+# Splitwise Clone with CSV Import
 
-A full-stack expense sharing application inspired by Splitwise.
+A full-stack shared expense management application inspired by Splitwise, extended with a CSV import engine capable of detecting and handling anomalies in messy real-world expense data.
 
 ## Features
 
-### Authentication
-
-* User Registration
-* User Login
 * JWT Authentication
-* Token Refresh
-* Logout with Refresh Token Blacklisting
-
-### Groups
-
-* Create Groups
-* View Groups
-* Invite Members
-* Remove Members
-* Group Details
-
-### Expenses
-
-* Create Expenses
-* Edit Expenses
-* Delete Expenses
-* Expense History
-* Expense Filtering
-
-### Split Types
-
-* Equal Split
-* Unequal Split
-* Percentage Split
-* Shares Split
-
-### Balances
-
-* Group-wise Balances
-* Overall Balances
-* Simplified Debt View
-
-### Settlements
-
-* Record Settlements
-* Settlement History
-
-### Expense Chat
-
-* Real-time messaging using WebSockets
-* Message History
-* Soft Delete Messages
-
----
+* Group Management
+* Dynamic Membership Changes
+* Expense Tracking
+* Equal, Unequal, Percentage and Shares Splits
+* Balance Summaries
+* Debt Simplification
+* Settlements
+* Expense Chat
+* CSV Import Engine
+* Import Anomaly Detection
+* Import Reporting
 
 ## Tech Stack
 
-### Backend
+Backend:
 
 * Django
 * Django REST Framework
-* PostgreSQL
 * Django Channels
+* PostgreSQL
 * Redis
 * SimpleJWT
 
-### Frontend
+Frontend:
 
 * React
 * TypeScript
@@ -73,29 +36,10 @@ A full-stack expense sharing application inspired by Splitwise.
 * Tailwind CSS
 * Zustand
 * React Query
-* Axios
-
----
-
-## Test Summary
-
-Backend automated tests passing:
-
-* Authentication
-* Groups
-* Expenses
-* Balances
-* Debt Simplification
-* Settlements
-* Chat
-
-**Total: 411 tests passed**
-
----
 
 ## Setup
 
-### Backend
+Backend:
 
 ```bash
 cd backend
@@ -106,7 +50,7 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-### Frontend
+Frontend:
 
 ```bash
 cd frontend
@@ -114,22 +58,16 @@ npm install
 npm run dev
 ```
 
----
+## AI Used
 
-## Deployment
+AI tools used:
 
-Frontend: Vercel
+* Antigravity
+* ChatGPT
 
-Backend: Render
+The developer reviewed, tested, and modified all generated output.
 
----
+## Tests
 
-## GitHub Repository
-
-https://github.com/kanhiya7568/splitwise-clone
-
----
-
-## Author
-
-Kanhiya Singh
+* Backend Tests: 411 passing
+* CSV Import Tests: 48 passing
