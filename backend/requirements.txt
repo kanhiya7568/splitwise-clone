@@ -1,0 +1,39 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# requirements.txt — Splitwise Clone Backend
+# All versions pinned for reproducibility.
+# Python 3.12+ required (see runtime.txt).
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── Django core ───────────────────────────────────────────────────────────────
+Django==5.0.6
+
+# ── REST API ──────────────────────────────────────────────────────────────────
+djangorestframework==3.15.2
+
+# ── JWT Authentication ────────────────────────────────────────────────────────
+djangorestframework-simplejwt==5.3.1
+
+# ── CORS ──────────────────────────────────────────────────────────────────────
+django-cors-headers==4.3.1
+
+# ── Filtering ─────────────────────────────────────────────────────────────────
+django-filter==24.2
+
+# ── WebSocket / Real-time ─────────────────────────────────────────────────────
+channels==4.1.0
+channels-redis==4.2.0
+daphne==4.1.2             # ASGI server (required instead of gunicorn for WebSockets)
+
+# ── Database ──────────────────────────────────────────────────────────────────
+# psycopg[binary] (psycopg3) ships its own libpq binary wheel.
+# No system libpq-dev package required.
+# Compatible with Django 4.2+ and Django 5.x.
+psycopg[binary]==3.2.3
+dj-database-url==2.1.0   # parses DATABASE_URL connection string
+
+# ── Environment variables ─────────────────────────────────────────────────────
+python-decouple==3.8      # reads .env file and environment variables
+
+# ── Testing ───────────────────────────────────────────────────────────────────
+pytest==8.2.2
+pytest-django==4.8.0

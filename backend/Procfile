@@ -1,0 +1,5 @@
+# Render start command.
+# Daphne (ASGI) is required instead of Gunicorn (WSGI) because
+# Django Channels needs an ASGI server to handle WebSocket connections.
+# -b 0.0.0.0 binds to all interfaces; -p $PORT uses Render's dynamic port.
+web: daphne -b 0.0.0.0 -p $PORT config.asgi:application
